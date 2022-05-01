@@ -38,4 +38,4 @@ yarn-error.log*
 *.tsbuildinfo
 
 # storybook
-publuc
+storybook-static
