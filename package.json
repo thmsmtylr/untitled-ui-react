@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook --exit-zero-on-changes",
     "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
