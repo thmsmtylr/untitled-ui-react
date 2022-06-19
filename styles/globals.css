@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+#__next {
+  @apply h-full;
+}
+
 body {
-  @apply antialiased;
+  @apply antialiased overflow-hidden;
 }
