@@ -20,6 +20,7 @@ import LogoOutIcon from "../../public/icons/log-out.svg";
 import SearchIcon from "../../public/icons/search.svg";
 import TwoLayersIcon from "../../public/icons/2-layers.svg";
 import ZapIcon from "../../public/icons/zap.svg";
+import CheckIcon from "../../public/icons/check.svg";
 
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { toggleClassNames } from "../../helpers/toggleClassNames";
@@ -105,25 +106,9 @@ const plans: PlanProps = [
   },
 ];
 
-function CheckIcon(props: any) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" {...props}>
-      <circle cx={12} cy={12} r={12} fill="#fff" opacity="0.2" />
-      <path
-        d="M7 13l3 3 7-7"
-        stroke="#fff"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export default function Settings() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [subMenuOpen, setSubMenuOpen] = useState<boolean>(false);
-  const [isSettingsMenuItem, setIsSettingsMenuItem] = useState<boolean>(false);
   const [selected, setSelected] = useState(plans[0]);
 
   return (
@@ -399,14 +384,21 @@ export default function Settings() {
                               checked
                                 ? "ring-1 ring-primary-300 text-primary-800 bg-primary-50"
                                 : "",
-                              "rounded-lg p-4 relative flex cursor-pointer focus:outline-none bg-white"
+                              "rounded-lg p-4 relative flex cursor-pointer focus:outline-none bg-white hover:ring-1 hover:ring-primary-300 transition-colors duration-300 group"
                             )}`
                           }
                         >
                           {({ active, checked }) => (
                             <>
                               <div className="flex w-full items-center justify-between">
-                                <div className="flex items-center">
+                                <div className="flex items-center gap-4">
+                                  <div className="w-8 h-8 flex items-center justify-center rounded-full bg-primary-100 ring-4 ring-primary-50 text-primary-600">
+                                    {plan.name === "Business" ? (
+                                      <plan.icon className="shrink-0 w-[13.3px] h-[13.3px]" />
+                                    ) : (
+                                      <plan.icon className="shrink-0" />
+                                    )}
+                                  </div>
                                   <div className="text-sm">
                                     <RadioGroup.Label
                                       as="p"
@@ -417,7 +409,6 @@ export default function Settings() {
                                         "font-medium"
                                       )}
                                     >
-                                      <TwoLayersIcon />
                                       {plan.name}{" "}
                                       <span
                                         className={classNames(
@@ -450,11 +441,18 @@ export default function Settings() {
                                     </RadioGroup.Description>
                                   </div>
                                 </div>
-                                {checked && (
-                                  <div className="shrink-0 text-white">
-                                    <CheckIcon className="h-6 w-6" />
-                                  </div>
-                                )}
+                                <div
+                                  className={classNames(
+                                    checked
+                                      ? "bg-primary-700 ring-0 hover:none"
+                                      : "group-hover:ring-primary-600 group-hover:bg-primary-100",
+                                    "w-4 h-4 rounded-full ring-1 ring-gray-300 transition-colors duration-300 flex items-center justify-center"
+                                  )}
+                                >
+                                  {checked && (
+                                    <CheckIcon className="text-white" />
+                                  )}
+                                </div>
                               </div>
                             </>
                           )}
@@ -470,7 +468,7 @@ export default function Settings() {
             <aside
               className={classNames(
                 subMenuOpen ? "translate-x-0" : "-translate-x-full",
-                "hidden h-screen lg:flex-shrink-0 lg:block lg:order-first transition-all"
+                "hidden h-screen lg:flex-shrink-0 lg:block lg:order-first transition-all duration-300"
               )}
             >
               <div className="h-full relative flex flex-col w-72 bg-primary-800 border-r border-gray-200 overflow-y-auto pt-9 px-4">
@@ -486,7 +484,7 @@ export default function Settings() {
                       <a
                         className={classNames(
                           item.name === "Billing" ? "bg-primary-700" : "",
-                          "text-left w-full text-base text-primary-100 hover:text-white active:text-white active:bg-primary-700 hover:bg-primary-600 transition-colors rounded-md px-3 py-2 font-medium flex items-center"
+                          "text-left w-full text-base text-primary-100 hover:text-white active:text-white active:bg-primary-700 hover:bg-primary-600 transition-colors duration-300 rounded-md px-3 py-2 font-medium flex items-center"
                         )}
                         key={item.name}
                         href={item.href}
