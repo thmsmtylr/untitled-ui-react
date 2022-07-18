@@ -5,7 +5,6 @@ import { RadioGroup } from "@headlessui/react";
 import { classNames } from "../../helpers/classNames";
 import { Table } from "../../components/core/table";
 import { toggleClassNames } from "../../helpers/toggleClassNames";
-import { billingHistory } from "../../components/core/table";
 import HomeIcon from "../../public/icons/home.svg";
 import BarChart2Icon from "../../public/icons/bar-chart-2.svg";
 import ThreeLayersIcon from "../../public/icons/3-layers.svg";
@@ -42,8 +41,8 @@ interface UserProps {
 }
 
 const user: UserProps = {
-  name: "Emily Selman",
-  email: "emily.selman@example.com",
+  name: "Olivia Rhye",
+  email: "olivia@untitledui.com",
   imageUrl:
     "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
@@ -111,7 +110,7 @@ const plans: PlanProps = [
 ];
 
 export default function Settings() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [subMenuOpen, setSubMenuOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState(plans[0]);
 
@@ -170,7 +169,7 @@ export default function Settings() {
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="pt-5 pb-4">
+                  <div className="pt-5 pb-4 flex-1">
                     <div className="flex-shrink-0 flex items-center px-4 mb-5">
                       <img
                         className="h-8 w-auto"
@@ -207,22 +206,29 @@ export default function Settings() {
                     </nav>
                   </div>
                   <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                    <a href="#" className="flex-shrink-0 group block">
+                    <a href="#" className="flex-shrink-0 group block w-full">
                       <div className="flex items-center">
-                        <div>
+                        <div className="flex-shrink-0">
                           <img
                             className="inline-block h-10 w-10 rounded-full"
                             src={user.imageUrl}
                             alt=""
                           />
                         </div>
-                        <div className="ml-3">
-                          <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                            {user.name}
-                          </p>
-                          <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
-                            Account Settings
-                          </p>
+                        <div className="ml-3 w-full">
+                          <div className="flex items-center">
+                            <div className="flex flex-col">
+                              <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
+                                {user.name}
+                              </p>
+                              <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
+                                Account Settings
+                              </p>
+                            </div>
+                            <div className="ml-auto">
+                              <LogoOutIcon className="text-gray-500" />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </a>
@@ -500,9 +506,13 @@ export default function Settings() {
                     questions.
                   </p>
                 </div>
-                <div className="col-start-4 col-end-13">
+                <div className="col-start-4 col-end-13 hidden md:block">
                   <Table />
                 </div>
+              </div>
+              {/* Mobile table */}
+              <div className="block md:hidden">
+                <Table />
               </div>
             </section>
 

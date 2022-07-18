@@ -31,6 +31,7 @@ module.exports = {
         },
         success: {
           50: "#ECFDF3",
+          500: "#12B76A",
           700: "#027A48",
         },
       },
