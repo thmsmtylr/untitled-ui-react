@@ -502,8 +502,8 @@ export default function Settings() {
                   </h3>
                   <p className="text-sm text-gray-500 mb-6 sm:mb-0">
                     Please reach out to our friendly team via{" "}
-                    <span className="underline">billing@untitled.com</span> with
-                    questions.
+                    <span className="underline">billing@untitleui.com</span>{" "}
+                    with questions.
                   </p>
                 </div>
                 <div className="col-start-4 col-end-13 hidden md:block">
