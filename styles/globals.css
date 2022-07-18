@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  scrollbar-width: thin;
+}
+
 html,
 body,
 #__next {
@@ -9,5 +13,14 @@ body,
 }
 
 body {
-  @apply antialiased overflow-hidden;
+  @apply antialiased scroll-smooth;
+}
+
+/* Checkboxes */
+
+@layer components {
+  [type="checkbox"]:checked {
+    background-size: 0.875rem 0.875rem;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTExLjY2NjYgMy41TDUuMjQ5OTIgOS45MTY2N0wyLjMzMzI1IDciIHN0cm9rZT0iIzdGNTZEOSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==");
+  }
 }

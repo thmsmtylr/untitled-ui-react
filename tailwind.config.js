@@ -29,8 +29,18 @@ module.exports = {
           300: "#D0D5DD",
           500: "#667085",
         },
+        success: {
+          50: "#ECFDF3",
+          700: "#027A48",
+        },
       },
       fontSize: {
+        "display-xs": [
+          "1.438rem",
+          {
+            lineHeight: "2.375rem",
+          },
+        ],
         "display-sm": [
           "1.875rem",
           {

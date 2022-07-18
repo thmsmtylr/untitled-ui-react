@@ -3,6 +3,9 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { RadioGroup } from "@headlessui/react";
 import { classNames } from "../../helpers/classNames";
+import { Table } from "../../components/core/table";
+import { toggleClassNames } from "../../helpers/toggleClassNames";
+import { billingHistory } from "../../components/core/table";
 import HomeIcon from "../../public/icons/home.svg";
 import BarChart2Icon from "../../public/icons/bar-chart-2.svg";
 import ThreeLayersIcon from "../../public/icons/3-layers.svg";
@@ -21,9 +24,16 @@ import SearchIcon from "../../public/icons/search.svg";
 import TwoLayersIcon from "../../public/icons/2-layers.svg";
 import ZapIcon from "../../public/icons/zap.svg";
 import CheckIcon from "../../public/icons/check.svg";
+import DownloadCloudIcon from "../../public/icons/download-cloud.svg";
+import MenuTwo from "../../public/icons/menu-2.svg";
 
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import { toggleClassNames } from "../../helpers/toggleClassNames";
+import { XIcon } from "@heroicons/react/outline";
+
+export enum Plans {
+  Basic = "Basic",
+  Business = "Business",
+  Enterprise = "Enterprise",
+}
 
 interface UserProps {
   name: string;
@@ -69,12 +79,6 @@ const subNavigation: NavigationProps = [
   { name: "Integrations", href: "#", icon: ToggleRightIcon },
 ];
 
-enum Plans {
-  Basic = "Basic",
-  Business = "Business",
-  Enterprise = "Enterprise",
-}
-
 type PlanProps = {
   name: Plans;
   price: number;
@@ -107,7 +111,7 @@ const plans: PlanProps = [
 ];
 
 export default function Settings() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(true);
   const [subMenuOpen, setSubMenuOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState(plans[0]);
 
@@ -155,7 +159,7 @@ export default function Settings() {
                     <div className="absolute top-0 right-0 -mr-12 pt-4">
                       <button
                         type="button"
-                        className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        className="ml-1 flex items-center justify-center h-10 w-10"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <span className="sr-only">Close sidebar</span>
@@ -167,15 +171,25 @@ export default function Settings() {
                     </div>
                   </Transition.Child>
                   <div className="pt-5 pb-4">
-                    <div className="flex-shrink-0 flex items-center px-4">
+                    <div className="flex-shrink-0 flex items-center px-4 mb-5">
                       <img
                         className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                        src="/logo-lockup.png"
                         alt="Workflow"
                       />
                     </div>
                     <nav aria-label="Sidebar" className="mt-5">
                       <div className="px-2 space-y-1">
+                        <div className="relative px-2 mb-4">
+                          <input
+                            className="h-11 w-full bg-white flex items-center rounded-lg pl-[28px] pr-[10px] py-[14px] gap-2 border border-gray-300 focus:border-primary-300 focus:ring-4 focus:ring-primary-100 focus:outline-none transition-colors drop-shadow-sm text-base placeholder:text-gray-500"
+                            placeholder="Search"
+                            aria-label="Search billing"
+                          />
+                          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-gray-500">
+                            <SearchIcon />
+                          </div>
+                        </div>
                         {navigation.map((item) => (
                           <a
                             key={item.name}
@@ -229,7 +243,7 @@ export default function Settings() {
               <div className="flex-1">
                 <div className="bg-primary-700 pt-8 pb-6 flex items-center justify-center">
                   <img
-                    className="h-8 w-auto"
+                    className="h-8 w-auto sm:block hidden"
                     src="/logomark.png"
                     alt="Workflow"
                   />
@@ -297,24 +311,23 @@ export default function Settings() {
         <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
           {/* Mobile top navigation */}
           <div className="lg:hidden">
-            <div className="bg-indigo-600 py-2 px-4 flex items-center justify-between sm:px-6 lg:px-8">
+            <div className="py-2 px-4 bg-white flex items-center justify-between sm:px-6 lg:px-8 border-b border-b-gray-200">
               <div>
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white"
-                  alt="Workflow"
+                  src="/logo-lockup.png"
+                  alt="Untitled UI"
                 />
               </div>
-              <div>
-                <button
-                  type="button"
-                  className="-mr-3 h-12 w-12 inline-flex items-center justify-center bg-indigo-600 rounded-md text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                  onClick={() => setMobileMenuOpen(true)}
-                >
-                  <span className="sr-only">Open sidebar</span>
-                  <MenuIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-              </div>
+              <button
+                type="button"
+                className="-mr-3 h-10 w-10 inline-flex items-center justify-center rounded-lg bg-transparent hover:bg-gray-50 transition-all focus:ring-4 focus:ring-primary-100"
+                onClick={() => setMobileMenuOpen(true)}
+                onMouseLeave={() => console.log("mouse")}
+              >
+                <span className="sr-only">Open sidebar</span>
+                <MenuTwo className="h-6 w-6" aria-hidden="true" />
+              </button>
             </div>
           </div>
 
@@ -323,13 +336,13 @@ export default function Settings() {
             <section
               aria-labelledby="primary-heading"
               className={classNames(
-                subMenuOpen ? "ml-0" : "-ml-72",
+                subMenuOpen ? "ml-0" : "sm:-ml-72",
                 "min-w-0 flex-col overflow-y-auto lg:order-last transition-all w-full"
               )}
             >
-              <div className="mx-8 my-8 grid grid-cols-12 grid-flow-col gap-8 items-center">
+              <div className="mx-4 sm:mx-8 my-8 sm:grid sm:grid-cols-12 sm:grid-flow-col gap-8 items-center">
                 <h1
-                  className="text-display-sm font-medium text-gray-900 col-span-6"
+                  className="text-display-xs sm:text-display-sm font-medium text-gray-900 col-span-6 mb-4 sm:mb-0"
                   id="primary-heading"
                 >
                   Billing
@@ -347,7 +360,7 @@ export default function Settings() {
                   </div>
                 </div>
               </div>
-              <div className="mx-8 mb-8">
+              <div className="mx-4 sm:mx-8 mb-8">
                 <h2 className="text-gray-900 text-lg font-medium mb-1">
                   Account plans
                 </h2>
@@ -355,13 +368,13 @@ export default function Settings() {
                   Pick an account plan that fits your workflow.
                 </p>
               </div>
-              <div className="mx-8 mb-6 border-b border-b-gray-200" />
-              <div className="mx-8 grid grid-cols-12 grid-flow-col gap-8">
+              <div className="mx-4 sm:mx-8 mb-6 border-b border-b-gray-200" />
+              <div className="mx-4 sm:mx-8 sm:grid grid-cols-12 grid-flow-col gap-8 mb-8">
                 <div className="col-start-1 col-end-4">
                   <h3 className="text-sm font-medium text-gray-700">
                     Current plan
                   </h3>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 mb-5 sm:mb-0">
                     We&apos;ll credit your account if you need to downgrade
                     during the billing cycle.
                   </p>
@@ -371,7 +384,7 @@ export default function Settings() {
                     <RadioGroup.Label className="sr-only">
                       Current plan
                     </RadioGroup.Label>
-                    <div className="space-y-2">
+                    <div className="space-y-3 sm:space-y-2">
                       {plans.map((plan) => (
                         <RadioGroup.Option
                           key={plan.name}
@@ -379,20 +392,20 @@ export default function Settings() {
                           className={({ active, checked }) =>
                             `${classNames(
                               active
-                                ? "ring-1 ring-primary-300 text-primary-800 bg-primary-50"
-                                : "",
+                                ? "ring-1 ring-primary-500 text-primary-800 bg-primary-50"
+                                : "ring-1 ring-gray-200",
                               checked
-                                ? "ring-1 ring-primary-300 text-primary-800 bg-primary-50"
-                                : "",
-                              "rounded-lg p-4 relative flex cursor-pointer focus:outline-none bg-white hover:ring-1 hover:ring-primary-300 transition-colors duration-300 group"
+                                ? "ring-1 ring-primary-500 text-primary-800 bg-primary-50"
+                                : "ring-1 ring-gray-200",
+                              "rounded-lg p-4 relative flex cursor-pointer flex-shrink-0 focus:outline-none bg-white hover:ring-1 hover:ring-primary-300 transition-colors duration-300 group"
                             )}`
                           }
                         >
                           {({ active, checked }) => (
                             <>
-                              <div className="flex w-full items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                  <div className="w-8 h-8 flex items-center justify-center rounded-full bg-primary-100 ring-4 ring-primary-50 text-primary-600">
+                              <div className="flex w-full items-start sm:items-center justify-between">
+                                <div className="flex items-start sm:items-center gap-4">
+                                  <div className="w-8 h-8 flex flex-shrink-0 items-center justify-center rounded-full bg-primary-100 ring-4 ring-primary-50 text-primary-600">
                                     {plan.name === "Business" ? (
                                       <plan.icon className="shrink-0 w-[13.3px] h-[13.3px]" />
                                     ) : (
@@ -446,7 +459,7 @@ export default function Settings() {
                                     checked
                                       ? "bg-primary-700 ring-0 hover:none"
                                       : "group-hover:ring-primary-600 group-hover:bg-primary-100",
-                                    "w-4 h-4 rounded-full ring-1 ring-gray-300 transition-colors duration-300 flex items-center justify-center"
+                                    "w-4 h-4 rounded-full ring-1 ring-gray-300 transition-colors duration-300 flex items-center justify-center flex-shrink-0 ml-2 sm:ml-0"
                                   )}
                                 >
                                   {checked && (
@@ -462,13 +475,42 @@ export default function Settings() {
                   </RadioGroup>
                 </div>
               </div>
+              <div className="mx-4 sm:mx-8 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 className="text-gray-900 text-lg font-medium mb-1">
+                    Billing and invoicing
+                  </h2>
+                  <p className="text-sm text-gray-500 mb-5 sm:mb-0">
+                    Pick an account plan that fits your workflow.
+                  </p>
+                </div>
+                <button className="h-10 w-[146px] drop-shadow-sm text-sm text-gray-700 hover:text-gray-800 hover:bg-gray-50 transition-colors duration-300 font-medium flex items-center justify-between px-4 py-[10px] ring-1 ring-gray-300 rounded-lg bg-white">
+                  <DownloadCloudIcon /> Download all
+                </button>
+              </div>
+              <div className="mx-4 sm:mx-8 mb-6 border-b border-b-gray-200" />
+              <div className="mx-4 sm:mx-8 sm:grid sm:grid-cols-12 grid-flow-col gap-8 mb-8">
+                <div className="col-start-1 col-end-4">
+                  <h3 className="text-sm font-medium text-gray-700">
+                    Billing history
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-6 sm:mb-0">
+                    Please reach out to our friendly team via{" "}
+                    <span className="underline">billing@untitled.com</span> with
+                    questions.
+                  </p>
+                </div>
+                <div className="col-start-4 col-end-13">
+                  <Table />
+                </div>
+              </div>
             </section>
 
             {/* Secondary column (hidden on smaller screens) */}
             <aside
               className={classNames(
                 subMenuOpen ? "translate-x-0" : "-translate-x-full",
-                "hidden h-screen lg:flex-shrink-0 lg:block lg:order-first transition-all duration-300"
+                "hidden h-screen lg:flex-shrink-0 lg:block lg:order-first transition-all"
               )}
             >
               <div className="h-full relative flex flex-col w-72 bg-primary-800 border-r border-gray-200 overflow-y-auto pt-9 px-4">
