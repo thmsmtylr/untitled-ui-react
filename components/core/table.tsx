@@ -122,7 +122,7 @@ export const Table = () => {
               {item.invoice}
             </td>
             <td className="px-6 py-6">
-              <div className="text-xs h-[22px] flex items-center justify-center gap-1 leading-[22px] rounded-2xl font-medium text-success-700 bg-success-50 py-[2px] pl-[6px] pr-2">
+              <div className="text-xs w-[55px] h-[22px] flex items-center justify-center gap-1 leading-[22px] rounded-2xl font-medium text-success-700 bg-success-50 py-[2px] pl-[6px] pr-2">
                 <CheckIcon className="text-success-500" /> {item.status}
               </div>
             </td>
